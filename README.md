@@ -117,3 +117,31 @@ src/
 - **API errors** – Check internet connection and verify DummyJSON endpoints are accessible
 - **Token errors** – Clear localStorage (`F12` → Application → Storage → localStorage → delete `auth`) and log in again
 
+## End-to-end tests (E2E)
+
+- **Running the E2E test**
+
+   1. Ensure the dev server is running on `http://localhost:5173`:
+       ```powershell
+       npm run dev -- --host
+       ```
+   2. Install dev dependencies and Playwright browsers (if not already):
+       ```powershell
+       npm install
+       npx playwright install chromium
+       ```
+   3. Run the headless E2E login test:
+       ```powershell
+       npm run test:e2e
+       ```
+
+- **Artifacts on failure**
+
+   If the E2E script encounters a failure, it will capture a full-page PNG screenshot and the current page HTML and save them to `scripts/e2e-screenshots/` with a timestamped filename (e.g. `failure-2025-11-25T07-00-00-000Z.png`). Use these artifacts to debug UI state, network errors, or routing issues.
+
+- **Dev-only auth fallback**
+
+   The auth store (`src/stores/auth.js`) includes a development-only fallback: when the app is served from `localhost` and the DummyJSON auth endpoint returns HTTP 400/401, the store will create a local fake session (token `local-dev-token`, user `Local Demo`) and persist it to `localStorage`. This allows testing the UI and navigation locally even when the remote auth service rejects the demo credentials.
+
+   Note: this fallback is intentionally only for local development and should be removed or disabled before publishing a production build.
+

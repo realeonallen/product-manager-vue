@@ -145,3 +145,23 @@ src/
 
    Note: this fallback is intentionally only for local development and should be removed or disabled before publishing a production build.
 
+## CI status
+
+- **E2E workflow status:**
+
+   ![E2E Tests](https://github.com/realeonallen/product-manager-vue/actions/workflows/e2e.yml/badge.svg)
+
+## Controlling the local auth fallback
+
+If you want to explicitly enable or disable the development auth fallback (instead of relying on `localhost`), use a Vite environment variable.
+
+1. Create a `.env` (or `.env.local`) file in the project root with:
+
+```bash
+VITE_DEV_AUTH_FALLBACK=true
+```
+
+2. Restart the dev server. When `VITE_DEV_AUTH_FALLBACK` is `true` the app will allow the local fake session even if you're not on `localhost`.
+
+Reminder: Do not enable this in production builds — it's intended only for local development and demos.
+

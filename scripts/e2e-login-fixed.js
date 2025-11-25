@@ -4,7 +4,8 @@ const fs = require('fs')
 const path = require('path')
 
 ;(async () => {
-  const browser = await chromium.launch()
+  const headlessEnv = typeof process.env.PW_HEADLESS !== 'undefined' ? process.env.PW_HEADLESS !== 'false' : true
+  const browser = await chromium.launch({ headless: headlessEnv })
   const context = await browser.newContext()
   const page = await context.newPage()
   try {
